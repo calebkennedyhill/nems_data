@@ -286,7 +286,6 @@ def find_housing_age_data(target_states, target_municipalities, target_years
 
     print("\n\n\n\n\t\t...querying...\t\tHOUSING AGE")
     
-    # Loop through each year...
     for year in target_years:
 
         try:
@@ -326,36 +325,6 @@ def find_housing_age_data(target_states, target_municipalities, target_years
 
                 all_raw_data.extend(raw_data)
 
-                """
-                small_data = []
-                for row in raw_data:
-                    if row["NAME"] not in target_municipalities:
-                        continue
-                    row["year"] = year
-                    small_data.append(row)
-                print(
-                "\t\tsmall_data is " +
-                ("not empty " if bool(small_data) else "EMPTY ") + 
-                f"for {year}."
-                )
-                
-                small_df = pd.DataFrame(small_data)
-                small_df.rename(columns=age_variables, inplace=True)
-                this_years_columns = ["NAME", "year"] + list(age_variables.values())
-                small_df = small_df[this_years_columns]
-                if df.empty:
-                    df = small_df
-                else:
-                    # print("pre-existing cols:\n", list(df.columns) )
-                    # print("      \n new cols:\n", this_years_columns)
-                    df = df.merge(
-                        small_df, 
-                        how='outer', 
-                        suffixes=(None,None),
-                        on=list(set(this_years_columns) & set(df.columns))
-                        )
-                """
-
         except Exception as e:
 
             print(f"    [!] Error completely skipping year {year}: {e}")
@@ -368,21 +337,6 @@ def find_housing_age_data(target_states, target_municipalities, target_years
 
     final_columns = ["year", "NAME"] + list(age_variables.values())
     output = df_filtered[final_columns]
-
-    """
-    # split NAME into different cols
-    df[
-        ["name", "muni_type", "county", "state"]
-    ] = df["NAME"].apply(parse_name_field)
-    df.drop(columns=["NAME"], inplace=True)
-
-    
-    # sort and reorder cols
-    df.sort_values(by=["state", "name", "year"], inplace=True)
-    first_cols = ["year", "name", "muni_type", "county", "state"]
-    last_cols = [col for col in df.columns if col not in first_cols]
-    df = df[first_cols + last_cols]
-    """
 
     # split name
     output[
@@ -405,14 +359,12 @@ def get_non_age_data(target_states, target_municipalities, target_years, variabl
     c = Census(CENSUS_API_KEY)
     fields = ["NAME"] + list(variables.keys())
 
-    # We will store the results of every API call in this master list
     all_raw_data = []
 
     print("\n\n\n\n\t\t...querying...\t\tNON-AGE-RELATED")
 
-    # Loop through each year...
     for year in target_years:
-        # ...and loop through each state for that year
+
         for state_name, state_fips in target_states.items():
             print(f" -- grabbing {state_name} for {year}...")
             
@@ -426,29 +378,21 @@ def get_non_age_data(target_states, target_municipalities, target_years, variabl
                     year=year
                 )
                 
-                # The API doesn't return the year in the results, so we manually 
-                # stamp each row of data with the year we just queried.
                 for row in raw_data:
                     row["year"] = year
                 
-                # Add this batch of data to our master list
                 all_raw_data.extend(raw_data)
                 
             except Exception as e:
-                # If a specific year/state fails (e.g., data isn't published yet), 
-                # this prevents the whole script from crashing.
                 print(f"    [!] Error fetching {state_name} in {year}: {e}")
 
 
-    # Convert the massive list of dictionaries into a single DataFrame
     df = pd.DataFrame(all_raw_data)
 
-    # Filter the table to only show the places in our list
     df_filtered = df[ df['NAME'].isin(target_municipalities) ].copy()
     df_filtered.rename(columns=variables, inplace=True)
     df_filtered.sort_values(by=["NAME", "year"], inplace=True)
 
-    # Arrange the final columns so 'Year' is first, followed by 'NAME', then the variables
     final_columns = ["year", "NAME"] + list(variables.values())
     output = df_filtered[final_columns]
 
