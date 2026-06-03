@@ -4,19 +4,19 @@ import requests
 import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 
+from us import states
 from census import Census
 
 from setup import CENSUS_API_KEY
 
 
-
 target_states = {
-    "Connecticut": "09",
-    "Maine": "23",
-    "Massachusetts": "25",
-    "New Hampshire": "33",
-    "Rhode Island": "44",
-    "Vermont": "50"
+    "Connecticut": str(states.CT.fips),
+    "Maine": str(states.ME.fips),
+    "Massachusetts": str(states.MA.fips),
+    "New Hampshire": str(states.NH.fips),
+    "Rhode Island": str(states.RI.fips),
+    "Vermont": str(states.VT.fips)
 }
 
 target_municipalities = [
@@ -180,15 +180,6 @@ def get_b25036_metadata(year):
             )
     }
 
-    # all_universes = list(set([
-    #     val["universe"] for val in b25036_metadata.values()
-    # ]))
-
-    # if len(all_universes) == 1:
-    #     return all_universes[0], b25036_metadata
-    # else:
-    #     print(f"\n\tInconsistent universe for B25036 in {year}.\t\tCrashing.")
-    #     return None
     return b25036_metadata
 
 
@@ -450,4 +441,4 @@ get_all_data(
     target_states = target_states,
     target_years = target_years,
     variables = variables
-).to_csv("../reports/asst_2_metrics.csv", sep=",", index=False)
+).to_csv("./reports/asst_2_metrics_US.csv", sep=",", index=False)
