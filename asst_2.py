@@ -6,8 +6,8 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 from census import Census
 
+from setup import CENSUS_API_KEY
 
-CENSUS_API_KEY = "08f2976c3a7c16376973ec7c6bf0a31bd3c22d78"
 
 
 target_states = {
@@ -77,7 +77,7 @@ target_years = [
     2023,
     2024
 ]
-# variables: https://api.census.gov/data/2024/acs/acs5/variables.html?key=08f2976c3a7c16376973ec7c6bf0a31bd3c22d78
+# variables: https://api.census.gov/data/2024/acs/acs5/variables.html?key=[CENSUS_API_KEY]
 variables = {
     "B01003_001E": "total_population",
 
@@ -156,7 +156,7 @@ def parse_name_field(name_string):
             state
         ])
 
-# metadata: https://api.census.gov/data/2024/acs/acs5/groups/B25036.json?key=08f2976c3a7c16376973ec7c6bf0a31bd3c22d78
+# metadata: https://api.census.gov/data/2024/acs/acs5/groups/B25036.json?key=[CENSUS_API_KEY]
 # helper functions for age-related variables
 def get_b25036_metadata(year):
     """
