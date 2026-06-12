@@ -1,3 +1,6 @@
 .vscode/settings.json
 setup.py
 reports/*
+pipeline.log
+.DS_Store
+__pycache__/*
