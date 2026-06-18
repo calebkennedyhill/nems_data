@@ -4,6 +4,8 @@
 \usepackage{hyperref}
 \usepackage{color}
 \newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+
 
 \usepackage[a4paper,
             bindingoffset=0.2in,
@@ -24,7 +26,6 @@
 Things to do:
 \red{
     \begin{itemize}
-        \item Upload this to GitHub in the NEMS repo
         \item Start pipeline docs
         \item Start metrics metadata
         \item Expand ArcGIS Portfolio docs
@@ -68,6 +69,11 @@ The system schematic is as follows:
 \text{Feature Layer} 
 \]
 
+\blue{IMPORTANT:
+To do any of this you will need an ArcGIS Online account with publishing permissions.
+UNH has a license for ArcGIS Online, but we need to contact admin to get permissions.
+Let me know if you don't have publishing permissions.
+}
 
 
 \subsection*{Create a Web App}
@@ -93,7 +99,9 @@ which is linked
     Upload the \verb|.zip| file to ArcGIS Online as a \textbf{Feature Layer}.
     Navigate to the \verb|Content| tab of ArcGIS Online, then click \verb|New item|.
     Click the \verb|Feature layer|, and then the \verb|Upload a file| otpions.
-    Be sure to choose the upload option that creates a Hosted Feature Layer.
+    Be sure to choose the upload option that creates a Hosted Feature Layer. \footnote{
+        This step is not possible wihtout publishing permissions!
+    }
     Pick a good name, and add a helpful description.
 
     \item 
@@ -133,6 +141,8 @@ which is linked
 
 \subsection*{Create a Portfolio}
 A portfolio is the housing for several different Instant Apps.
+
+\red{Need to learn more before writing this up.}
 
 \[
 \text{Portfolio} \longleftarrow 
