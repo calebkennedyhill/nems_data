@@ -4,3 +4,9 @@ reports/*
 pipeline.log
 .DS_Store
 __pycache__/*
+methods/docs.aux
+methods/docs.fdb_latexmk
+methods/docs.fls
+methods/docs.log
+methods/docs.synctex.gz
+methods/docs.out

@@ -1,0 +1,173 @@
+\documentclass{article}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\newcommand{\red}[1]{{\color{red}{#1}}}
+
+\usepackage[a4paper,
+            bindingoffset=0.2in,
+            left=1.0in,
+            right=1.0in,
+            top=1.0in,
+            bottom=1.0in,
+            footskip=.25in]{geometry}
+
+\title{Workflow Documentation}
+\author{Caleb Kennedy Hill}
+\date{Summer 2026}
+
+\begin{document}
+
+\maketitle
+
+Things to do:
+\red{
+    \begin{itemize}
+        \item Upload this to GitHub in the NEMS repo
+        \item Start pipeline docs
+        \item Start metrics metadata
+        \item Expand ArcGIS Portfolio docs
+    \end{itemize}
+}
+
+This document is intended to serve as a reference for those of us working on the UNH 
+Sustainability Institute's Split Incentive Tak Force.
+
+
+\section{Data Pipeline}\label{sec:pipeline}
+
+This section will serve as documentation for the data pipeline.
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+\section{ArcGIS Online}
+The goal of this section is to detail the process of turning \verb|.shp| files derived from \verb|GeoDataFrame|
+into ArcGIS Instant Apps, for use in Portfolio projects.
+The system schematic is as follows:
+\[
+\text{Portfolio} \longleftarrow 
+\text{Instant App} \longleftarrow 
+\text{Web Map} \longleftarrow 
+\text{Feature Layer} 
+\]
+
+
+
+\subsection*{Create a Web App}
+A \textbf{Portfolio} is a collection of \textbf{sections} which link to Web Apps.
+We will be tying into the efforts of and extending the work of BU's CELT program.
+With this in mind, our propotypical example of a Portfolio should be their Legacy Transition Atlas,
+which is linked 
+\href{https://bucas.maps.arcgis.com/apps/instant/portfolio/index.html?appid=ea07ae399445465e9dd2448f211affc0}{
+    here
+}.
+
+
+
+
+\begin{enumerate}
+
+    \item 
+    Prepare ShapeFiles.
+    Be sure that the relevant \verb|GeoDataFrame| has been exported and compressed into a \verb|.zip| file.
+    The process of obtaining the shapefiles is outlined in Section~\ref{sec:pipeline}.
+
+    \item
+    Upload the \verb|.zip| file to ArcGIS Online as a \textbf{Feature Layer}.
+    Navigate to the \verb|Content| tab of ArcGIS Online, then click \verb|New item|.
+    Click the \verb|Feature layer|, and then the \verb|Upload a file| otpions.
+    Be sure to choose the upload option that creates a Hosted Feature Layer.
+    Pick a good name, and add a helpful description.
+
+    \item 
+    Back in the \verb|Content| window, open the Hosted Feature Layer you just created.
+    Choose the option to \verb|Open in Map Viewer| in the upper right.
+
+    \item 
+    Fiddle and Save.
+    The righthand side of the screen has a menu for changing how the map looks. 
+    We don't yet have a standardized way to approach this, so for now just do what you
+    think is reasonable.
+    When you're done, click \verb|Save as| from the lefthand menu and pick the same name
+    you used for the Feature Layer; add a short description as well.
+
+    \item 
+    In the \verb|Content| window, open Web Map.
+    In the options on the right, click \verb|Create app| and choose \verb|Instant App|.
+    In the page that opens, choose the \verb|Basic (Media Map)| option.
+    Name it the same thing as the previous two.
+
+    \item 
+    In \verb|Step 1| of the following screen, add the map you created in the previous step.
+    Make sure a legend is made available in \verb|Step 2|.
+    So far, not much else has been standardized, so play around and pick something
+    that doesn't seem crazy.
+
+    \item 
+    Before publishing, change the \verb|Share| settings on the lefthand menu to public.
+    Then Publish the app.
+
+\end{enumerate}
+
+
+
+
+
+
+\subsection*{Create a Portfolio}
+A portfolio is the housing for several different Instant Apps.
+
+\[
+\text{Portfolio} \longleftarrow 
+\text{Instant App} \longleftarrow 
+\text{Web Map} \longleftarrow 
+\text{Feature Layer} 
+\]
+
+\begin{enumerate}
+
+    
+\item 
+Create sections.
+
+
+\item 
+Upload base map for each section.
+
+
+\item 
+Put links to other apps in descriptopn.
+
+\end{enumerate}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+\end{document}
