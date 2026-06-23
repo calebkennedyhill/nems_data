@@ -39,10 +39,36 @@ Sustainability Institute's Split Incentive Tak Force.
 \section{Data Pipeline}\label{sec:pipeline}
 
 This section will serve as documentation for the data pipeline.
+The required python libraries include \verb|pandas|, \verb|us|, and \verb|census|.
+There are some others that are standard.
+
+
+\subsection{Setup}
+The preamble/defining involves setting the dictionaries \verb|target_states|
+and \verb|variables|,
+and the lists \verb|target_municipalities| and \verb|years|.
+The \verb|us.states| module takes care of the FIPS numbers for each state.
+Target municipalities (i.e., NEMS members) are taken from a master list;
+formatting them correctly is a great use for a chatbot.
+This output needs to be verified, though.
+The years of interest will depend on the application;
+however, one should not use overlapping ACS5 datasets!
+\href{
+    https://www.census.gov/newsroom/blogs/random-samplings/2022/03/period-estimates-american-community-survey.html
+}{Click here to see why.}
+
+
+\subsection{Getting ACS5 Data}
+Currently there are \blue{two different API calls} taking place: one for housing age-related data,
+and one for the rest.
+This will change.
+With modularity in mind, we should move to \red{separate calls for all different classes} of data.
+E.g., a call for population, a call for housing age, a call for heating fuel, etc.
 
 
 
 
+\subsection{Getting GIS Data}
 
 
 
@@ -145,7 +171,7 @@ A portfolio is the housing for several different Instant Apps.
 \red{Need to learn more before writing this up.}
 
 \[
-\text{Portfolio} \longleftarrow 
+\text{\blue{Portfolio}} \longleftarrow 
 \text{Instant App} \longleftarrow 
 \text{Web Map} \longleftarrow 
 \text{Feature Layer} 
