@@ -125,7 +125,7 @@ variables = {
 
 
 # name parsing to make things easier to read
-def parse_name_field(name_string):
+def parse_acs5_cousub_name(name_string):
 
         # Split on commas first
         parts = name_string.split(",")
@@ -332,7 +332,7 @@ def find_housing_age_data(target_states, target_municipalities, target_years
     # split name
     output[
         ["name", "muni_type", "county", "state"]
-    ] = output["NAME"].apply(parse_name_field)
+    ] = output["NAME"].apply(parse_acs5_cousub_name)
     output.drop(columns=["NAME"], inplace=True)
     output.sort_values(by=["state", "name", "year"], inplace=True)
 
@@ -412,7 +412,7 @@ def get_non_age_data(target_states, target_municipalities, target_years, variabl
     # split name
     output[
         ["name", "muni_type", "county", "state"]
-    ] = output["NAME"].apply(parse_name_field)
+    ] = output["NAME"].apply(parse_acs5_cousub_name)
     output.drop(columns=["NAME"], inplace=True)
     output.sort_values(by=["state", "name", "year"], inplace=True)
 
