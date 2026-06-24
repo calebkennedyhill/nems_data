@@ -267,7 +267,7 @@ def get_relevant_variables(year):
     return parsed_variables #universe, parsed_variables
 
 
-def find_housing_age_data(target_states, target_municipalities, target_years
+def get_housing_age_data(target_states, target_municipalities, target_years
         # target_years
         ):
     c = Census(CENSUS_API_KEY)
@@ -426,7 +426,7 @@ def get_non_age_data(target_states, target_municipalities, target_years, variabl
 
 # combine age- and non-age-related data into one df
 def get_all_data(target_states, target_municipalities, target_years, variables):
-    df_age = find_housing_age_data(target_states, target_municipalities, target_years)
+    df_age = get_housing_age_data(target_states, target_municipalities, target_years)
     df_non_age = get_non_age_data(target_states, target_municipalities, target_years, variables)
     output = df_age.merge(
         df_non_age, 
