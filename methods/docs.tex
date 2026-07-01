@@ -2,10 +2,13 @@
 \usepackage{verbatim}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \usepackage{color}
 \newcommand{\red}[1]{{\color{red}{#1}}}
 \newcommand{\blue}[1]{{\color{blue}{#1}}}
 
+\usepackage{xy}
+\xyoption{all}
 
 \usepackage[a4paper,
             bindingoffset=0.2in,
@@ -82,7 +85,7 @@ E.g., a call for population, a call for housing age, a call for heating fuel, et
 
 
 
-
+\pagebreak
 
 \section{ArcGIS Online}
 The goal of this section is to detail the process of turning \verb|.shp| files derived from \verb|GeoDataFrame|
@@ -102,7 +105,7 @@ Let me know if you don't have publishing permissions.
 }
 
 
-\subsection*{Create a Web App}
+\subsection*{Create an Instant App}
 A \textbf{Portfolio} is a collection of \textbf{sections} which link to Web Apps.
 We will be tying into the efforts of and extending the work of BU's CELT program.
 With this in mind, our propotypical example of a Portfolio should be their Legacy Transition Atlas,
@@ -121,6 +124,7 @@ which is linked
     Be sure that the relevant \verb|GeoDataFrame| has been exported and compressed into a \verb|.zip| file.
     The process of obtaining the shapefiles is outlined in Section~\ref{sec:pipeline}.
 
+
     \item
     Upload the \verb|.zip| file to ArcGIS Online as a \textbf{Feature Layer}.
     Navigate to the \verb|Content| tab of ArcGIS Online, then click \verb|New item|.
@@ -130,66 +134,73 @@ which is linked
     }
     Pick a good name, and add a helpful description.
 
+    \includegraphics[width=0.75\linewidth]{screenshot_1.png}
+
     \item 
     Back in the \verb|Content| window, open the Hosted Feature Layer you just created.
     Choose the option to \verb|Open in Map Viewer| in the upper right.
 
+    \includegraphics[width=0.75\linewidth]{screenshot_2.png}
+
     \item 
     Fiddle and Save.
     The righthand side of the screen has a menu for changing how the map looks. 
+    We will almost exclusively tweak the top three options: Properties, Style, and Filters.
     Here are some style notes which may be standardized:
     \begin{itemize}
         \item $0\%$ transparency
         \item Continuous variables classed into three quantiles
         \item NEMS members are colored Purple 1, and non-NEMS are colored Green 5.
+        If colors need to be copied exactly, they can be obtained by opening another
+        map and inspecting the style options. 
     \end{itemize}
+
+    Now is when the NEMS/non-NEMS filter shoudl be applied, i.e., filter for \verb|nems=1| or \verb|nems=0|.
+
+    \includegraphics[width=0.75\linewidth]{screenshot_3.png}
+
     When you're done, click \verb|Save as| from the lefthand menu and pick the same name
     you used for the Feature Layer; add a short description as well.
 
+
     \item 
-    In the \verb|Content| window, open Web Map.
+    In the \verb|Content| window, open Web Map you just created.
     In the options on the right, click \verb|Create app| and choose \verb|Instant App|.
     In the page that opens, choose the \verb|Basic (Media Map)| option.
     Name it the same thing as the previous two.
+    Not much needs to change here.
 
-    \item 
-    In \verb|Step 1| of the following screen, add the map you created in the previous step.
-    Make sure a legend is made available in \verb|Step 2|.
-    So far, not much else has been standardized, so play around and pick something
-    that doesn't seem crazy.
-
-    \item 
-    Before publishing, change the \verb|Share| settings on the lefthand menu to public.
-    Then Publish the app.
+    \includegraphics[width=0.75\linewidth]{screenshot_4.png}
 
 \end{enumerate}
 
-
+Thus you have created an Instant App!
+This app can be shared directly via its URL.
+Its default visibility is set to Private, meaning only the owner can view it.
+This can be changed at the current step, or later when publishing a Portfolio.
 
 
 
 \subsection*{Create a Portfolio}
-A portfolio is the housing for several different Instant Apps.
-
-\red{Need to learn more before writing this up.}
+A portfolio is the housing for possibly several different Instant Apps:
 
 \[
-\text{\blue{Portfolio}} \longleftarrow 
-\text{Instant App} \longleftarrow 
-\text{Web Map} \longleftarrow 
-\text{Feature Layer} 
+\xymatrix@C=40pt{
+    \text{Instant App} & \text{App 1} \ar[l] & \text{Web Map 1} \ar[l] & \text{Feature Layer 1} \ar[l]\ar[dl] \\
+    & \text{App 2} \ar[ul] & \text{Web Map 2} \ar[l] & \\
+    & \text{App 3} \ar[uul] & \text{Web Map 3} \ar[l] & \text{Feature Layer 2} \ar[l] \\
+}
 \]
 
-\begin{enumerate}
+\red{UNSTABLE BELOW}
 
+\begin{enumerate}
     
 \item 
 Create sections.
-
-
-\item 
-Upload base map for each section.
-
+Choose a base map for each section.
+There is a map called Base New England owned by me (username \verb|ckh1017_myunh|)
+which should serve as a nice blank opening screen.
 
 \item 
 Put links to other apps in descriptopn.
