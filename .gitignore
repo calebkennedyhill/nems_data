@@ -11,3 +11,4 @@ methods/docs.log
 methods/docs.synctex.gz
 methods/docs.out
 pipeline_nb.log
+shapes_out/*
