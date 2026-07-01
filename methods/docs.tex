@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{verbatim}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{color}
@@ -47,15 +48,14 @@ There are some others that are standard.
 
 
 \subsection{Setup}
-The preamble/defining involves setting the dictionaries \verb|target_states|
-and \verb|variables|,
-and the lists \verb|target_municipalities| and \verb|years|.
+The preamble/defining involves setting the dictionaries \verb|target_states|,
+\verb|nems_munis|, and \verb|years|.
 The \verb|us.states| module takes care of the FIPS numbers for each state.
 Target municipalities (i.e., NEMS members) are taken from a master list;
 formatting them correctly is a great use for a chatbot.
 This output needs to be verified, though.
 The years of interest will depend on the application;
-however, one should not use overlapping ACS5 datasets!
+however, one should not compare overlapping ACS5 datasets!
 \href{
     https://www.census.gov/newsroom/blogs/random-samplings/2022/03/period-estimates-american-community-survey.html
 }{Click here to see why.}
@@ -65,8 +65,45 @@ however, one should not use overlapping ACS5 datasets!
 Currently there are \blue{two different API calls} taking place: one for housing age-related data,
 and one for the rest.
 This will change.
-With modularity in mind, we should move to \red{separate calls for all different classes} of data.
-E.g., a call for population, a call for housing age, a call for heating fuel, etc.
+
+\subsubsection*{Query helper}
+Below are some useful facts about the functions used to interact with the ACS5 API.
+
+\begin{verbatim}
+    acs_df_from_raw(
+        all_raw_data, 
+        rename_dict:dict)
+\end{verbatim}
+Returns a Pandas DataFrame from raw data dumped out of the ACS5 module of the census package: 
+\verb|census.acs5.state_county_subdivision|.
+
+
+
+\begin{verbatim}
+    query_states_years_variables(
+        target_states:dict, 
+        target_years:list, 
+        variables:dict, 
+        loud=True)
+\end{verbatim}
+Essentially a wrapper for \verb|census.acs5.state_county_subdivision|.
+It manually deals with some issues with a few of the municipalities.
+Some naming conventions aren't matching, so I've manually changed them.
+This happens despite GEOID being a unique identifier;
+it may point to a misaligned set of underlying shapefiles.
+This requires further investigation.
+
+
+\subsubsection*{Housing Age}
+Several different functions exist which are intended to pull different ``classes'' of ACS5 variables.
+For instance, \textit{Renter Landscape} (renter share, rent burder), \textit{Housing} (housing age, size),
+or \textit{Energy} (energy burden, heating fuel).
+The only real difference currently is between variables related to housing age and those not related
+to housing age.
+
+
+
+
 
 
 
