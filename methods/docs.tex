@@ -19,7 +19,7 @@
             bottom=1.0in,
             footskip=.25in]{geometry}
 
-\title{Workflow Documentation}
+\title{Documentation}
 \author{Caleb Kennedy Hill}
 \date{Summer 2026}
 
@@ -27,8 +27,8 @@
 
 \maketitle
 
-Things to do:
-\red{
+
+\red{TODO:
     \begin{itemize}
         \item Start pipeline docs
         \item Start metrics metadata
@@ -62,11 +62,11 @@ however, one should not compare overlapping ACS5 datasets!
 
 
 \subsection{Getting ACS5 Data}
-Currently there are \blue{two different API calls} taking place: one for housing age-related data,
+Currently there are two different types of API calls taking place: one for housing age-related data,
 and one for the rest.
 This will change.
 
-\subsubsection*{Query helper}
+\subsubsection*{Query helpers}
 Below are some useful facts about the functions used to interact with the ACS5 API.
 
 \begin{verbatim}
@@ -122,12 +122,22 @@ to housing age.
 
 
 
+
+
+
+
+
 \pagebreak
 
 \section{ArcGIS Online}
-The goal of this section is to detail the process of turning \verb|.shp| files derived from \verb|GeoDataFrame|
+ArcGIS Online (AGOL) is the platform on which we aggregate, filter, arrange, and ultimately deliver
+information to the NEMS Network.
+The basic file type for creating a map is the \textbf{shapefile}, which have suffix \verb|.shp|.
+\href{https://www.youtube.com/watch?v=PfbjoAcQp8I&t=20s}{This video} gives a good enough introduction
+to what a shapefile is.
+The goal of the present section is to detail the process of turning \verb|.shp| files derived from \verb|GeoDataFrame|
 into ArcGIS Instant Apps, for use in Portfolio projects.
-The system schematic is as follows:
+The minimal system schematic is as follows:
 \[
 \text{Portfolio} \longleftarrow 
 \text{Instant App} \longleftarrow 
@@ -135,24 +145,37 @@ The system schematic is as follows:
 \text{Feature Layer} 
 \]
 
-\blue{{\bf IMPORTANT:}
-To do any of this you will need an ArcGIS Online account with publishing permissions.
-UNH has a license for ArcGIS Online, but we need to contact admin to get permissions.
-Let me know if you don't have publishing permissions.
-}
-
-
-\subsection*{Create an Instant App}
-A \textbf{Portfolio} is a collection of \textbf{sections} which link to Web Apps.
+For purposes, a \textbf{Portfolio} is a collection of Instant Apps, and a mini-browser to view them in.
 We will be tying into the efforts of and extending the work of BU's CELT program.
 With this in mind, our propotypical example of a Portfolio should be their Legacy Transition Atlas,
 which is linked 
-\href{https://bucas.maps.arcgis.com/apps/instant/portfolio/index.html?appid=ea07ae399445465e9dd2448f211affc0}{
-    here
-}.
+\href{https://bucas.maps.arcgis.com/apps/instant/portfolio/index.html?appid=ea07ae399445465e9dd2448f211affc0}{here.}
+
+The AGOL platform is quite modular.
+Once it is created, an Instant Apps can be specified just by URL.
+This means that any products we deliver can be displayed anywhere else.
+That is to say, we may have our own NEMS Portfolio existing in parellel to the CELT Portfolio.
+It might be something like:
+\[
+\xymatrix{
+    \text{NEMS Atlas} & & &  \\
+    & \text{Instant App} \ar[ul] \ar[dl] & \text{Web Map} \ar[l] & \text{Feature Layer} \ar[l] \\
+    \text{CELT Atlas} & & &  \\
+}
+\]
+Once we get around to actually creating a Portfolio, we will see that the diagrams 
+might be more complex.
+For now, the simple one-line diagram should be a sufficient mental model.
 
 
 
+\subsection*{Create an Instant App}
+Here is where we will create the Instant Apps which will be linked inside the Portfolio.
+
+\blue{{\bf IMPORTANT:}
+To do any of this you will need an AGOL account with publishing permissions.
+UNH has an AGOL license, but we need to contact admin to get permissions.
+}
 
 \begin{enumerate}
 
@@ -163,8 +186,8 @@ which is linked
 
 
     \item
-    Upload the \verb|.zip| file to ArcGIS Online as a \textbf{Feature Layer}.
-    Navigate to the \verb|Content| tab of ArcGIS Online, then click \verb|New item|.
+    Upload the \verb|.zip| file to AGOL as a \textbf{Feature Layer}.
+    Navigate to the \verb|Content| tab of AGOL, then click \verb|New item|.
     Click the \verb|Feature layer|, and then the \verb|Upload a file| otpions.
     Be sure to choose the upload option that creates a Hosted Feature Layer. \footnote{
         This step is not possible wihtout publishing permissions!
@@ -219,28 +242,83 @@ This can be changed at the current step, or later when publishing a Portfolio.
 
 
 \subsection*{Create a Portfolio}
-A portfolio is the housing for possibly several different Instant Apps:
+A portfolio can house several different Instant Apps:
 
 \[
 \xymatrix@C=40pt{
-    \text{Instant App} & \text{App 1} \ar[l] & \text{Web Map 1} \ar[l] & \text{Feature Layer 1} \ar[l]\ar[dl] \\
+    \text{Portfolio} & \text{App 1} \ar[l] & \text{Web Map 1} \ar[l] & \text{Feature Layer 1} \ar[l]\ar[dl] \\
     & \text{App 2} \ar[ul] & \text{Web Map 2} \ar[l] & \\
     & \text{App 3} \ar[uul] & \text{Web Map 3} \ar[l] & \text{Feature Layer 2} \ar[l] \\
 }
 \]
+Fortunately, once it's time to create a Portfolio, there's not much need to look past the second layer.
+So in reality our working model should be something like:
+\[
+\xymatrix{
+    & & \text{Portfolio} & & \\
+    \text{App 1} \ar[urr] & \text{App 2} \ar[ur] & \text{App 3} \ar[u] & \text{App 4} \ar[ul] & \text{App 5} \ar[ull]
+}
+\]
+
 
 \red{UNSTABLE BELOW}
 
 \begin{enumerate}
     
-\item 
-Create sections.
-Choose a base map for each section.
-There is a map called Base New England owned by me (username \verb|ckh1017_myunh|)
-which should serve as a nice blank opening screen.
+    \item 
+    In the Content tab, click the button to \verb|Create app|.
+    Choose the \verb|Portfolio| option, then choose a good name.
 
-\item 
-Put links to other apps in descriptopn.
+    % \includegraphics[width=0.75\linewidth]{example-image.pdf}
+
+    \item 
+    In the screen that opens next, click on \verb|Step 1. Portfolio|.
+    In the \verb|App layout| options, choose \verb|Accordion|.
+
+    % \includegraphics[width=0.75\linewidth]{example-image.pdf}
+
+    \item 
+    Now click the \verb|+| sign to add a new section, then click \verb|Browse for content|.
+    There is a Web Map called Base New England owned by me (username \verb|ckh1017_myunh|)
+    which should serve as a nice blank opening screen.
+    Search for this Web Map in the search bar at the top of the screen that opens;
+    be sure to not just search your own content, but that of the organization.
+
+    % \includegraphics[width=0.75\linewidth]{example-image.pdf}
+
+    \item 
+    Now you should be in the editing screen for that new section.
+    Change the name to something relevant, then click \verb|Edit description|.
+    The description is where we will hyperlink to the existing Instant Apps.
+
+    % \includegraphics[width=0.75\linewidth]{example-image.pdf}
+
+    \item 
+    Add a few words describing the apps you intend to display in this section.
+    Then use the hyperlink button or \verb|Ctrl/Cmd+K| and paste the URL of the desired Instant App.\footnote{
+        AGOL has a very annoying bug of opening the window to paste a hyperlink \textit{behind} 
+        the description editing window.
+        Most of the time I've been able to work around this.
+    }
+
+    % \includegraphics[width=0.75\linewidth]{example-image.pdf}
+    
+
+    \item 
+    Apply the following settings:
+    \begin{itemize}
+        \item \verb|Open in Map Viewer link| : off
+        \item \verb|Terms of use           | : off
+        \item \verb|Open links in app      | : on \blue{IMPORTANT}
+        \item \verb|Use item details       | : off
+    \end{itemize}
+
+    \item 
+    Finish editing the section by clicking \verb|Done|.
+    Either add more sections or publish the Portfolio.
+    Again, make sure share settings are set to public. 
+
+    % \includegraphics[width=0.75\linewidth]{example-image.pdf}
 
 \end{enumerate}
 
