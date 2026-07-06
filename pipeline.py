@@ -70,14 +70,9 @@ target_municipalities = [
     "Williston town, Chittenden County, Vermont"
 ]
 
-target_years = [
-    2010,
-    2014,
-    2018,
-    2023,
-    2024
-]
-# variables: https://api.census.gov/data/2024/acs/acs5/variables.html?key=[CENSUS_API_KEY]
+target_years = [2024]
+# variables: https://api.census.gov/data/2024/acs/acs5/variables.html
+
 variables = {
     "B01003_001E": "total_population",
 
