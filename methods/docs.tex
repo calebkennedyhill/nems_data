@@ -30,9 +30,7 @@
 
 \red{TODO:
     \begin{itemize}
-        \item Start pipeline docs
         \item Start metrics metadata
-        \item Expand ArcGIS Portfolio docs
     \end{itemize}
 }
 
@@ -75,7 +73,7 @@ Below are some useful facts about the functions used to interact with the ACS5 A
         rename_dict:dict)
 \end{verbatim}
 Returns a Pandas DataFrame from raw data dumped out of the ACS5 module of the census package: 
-\verb|census.acs5.state_county_subdivision|.
+\verb|census.acs5.state_county_subdivision()|.
 
 
 
@@ -86,21 +84,54 @@ Returns a Pandas DataFrame from raw data dumped out of the ACS5 module of the ce
         variables:dict, 
         loud=True)
 \end{verbatim}
-Essentially a wrapper for \verb|census.acs5.state_county_subdivision|.
+Essentially a wrapper for \verb|census.acs5.state_county_subdivision()|.
 It manually deals with some issues with a few of the municipalities.
 Some naming conventions aren't matching, so I've manually changed them.
 This happens despite GEOID being a unique identifier;
 it may point to a misaligned set of underlying shapefiles.
-This requires further investigation.
-
+\red{This requires further investigation.}
 
 \subsubsection*{Housing Age}
 Several different functions exist which are intended to pull different ``classes'' of ACS5 variables.
-For instance, \textit{Renter Landscape} (renter share, rent burder), \textit{Housing} (housing age, size),
-or \textit{Energy} (energy burden, heating fuel).
+For instance, \textit{Renter Landscape} (renter share, rent burden), \textit{Housing} 
+(structure age, structure size, household age), or \textit{Energy} (energy burden, heating fuel).
 The only real difference currently is between variables related to housing age and those not related
 to housing age.
+The reason is as follows.
 
+Far enough back in the past, ACS5 variables \verb|B25036| count numbers of structures built in a given decade.
+For instance, in the 2024 ACS5 \verb|B25036| counts structures built pre-1939,
+from 1940-1949, from 1950-1959, and so on.
+Things change when considering the more recent past.
+The 2024 ACS5 data, \verb|B25036| counts structures built 2010-2019, and then 2020-2024.
+On the other hand, though, in 2019, \verb|B25036| counts structures built 
+2010-2013, and then 2014-2019.
+
+This creates a mismatch that would require \textit{lots} of manual lookups and rewrites
+if one wanted to reuse code on different years.
+The functions
+\begin{itemize}
+    \item \verb|get_b25036_metadata()|
+    \item \verb|parse_construction_range()|
+    \item \verb|get_relevant_variables()|
+\end{itemize}
+address this mismatch, and are helpers for \verb|get_housing_size_data()|.
+The helpers grab metadata for a given year, parse the metadata, and return a dictionary
+of appropriately-named variables for the given year.
+For example, 
+\begin{verbatim}
+    get_relevant_variables(2024)
+        {'B25036_014E': 'built_2020_to_2024',
+        'B25036_015E': 'built_2010_to_2019',
+        'B25036_016E': 'built_2000_to_2009',
+        'B25036_017E': 'built_1990_to_1999',
+        'B25036_018E': 'built_1980_to_1989',
+        'B25036_019E': 'built_1970_to_1979',
+        'B25036_020E': 'built_1960_to_1969',
+        'B25036_021E': 'built_1950_to_1959',
+        'B25036_022E': 'built_1940_to_1949',
+        'B25036_023E': 'built_pre_1939'}
+\end{verbatim}
 
 
 
