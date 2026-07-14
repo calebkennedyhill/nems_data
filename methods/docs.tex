@@ -10,7 +10,7 @@
 
 \usepackage{xy}
 \xyoption{all}
-
+ 
 \usepackage[a4paper,
             bindingoffset=0.2in,
             left=1.0in,
@@ -200,6 +200,29 @@ For now, the simple one-line diagram should be a sufficient mental model.
 
 
 
+\subsection*{Style Considerations}
+In order to return standardized products, adhere to the following style/color standards.
+\textbf{These are an invention of me, Caleb Kennedy Hill, and are by no means ``correct.''}
+But it's what we're doing so far.
+
+Some data are transformed from continuous numbers to classes. 
+E.g., 1.369 is ``low,'' 6.893 is ``medium,'' and 10.733 is ``high.''
+For cases when AGOL is able to do this automatically, the color scheme 
+\verb|Purple 1| should be used for NEMS members, and \verb|Green 5| for non-NEMS members.
+When AGOL cannot automatically do this, use the following table for colors:
+
+\begin{center}
+\begin{tabular}{c||ccc}
+    & Low & Medium & High \\ \hline \hline
+    NEMS & \verb|# eecec9| & \verb|# d588b9| & \verb|# a14e96| \\
+    non-NEMS & \verb|# e2ebd3| & \verb|# add46a| & \verb|# 2d8078|
+\end{tabular}
+\end{center}
+
+For example, in the Housing Size map, we translate Low, Medium, and High to mean 1, 2-4, and 5+ units, respectively.
+
+
+
 \subsection*{Create an Instant App}
 Here is where we will create the Instant Apps which will be linked inside the Portfolio.
 
@@ -252,6 +275,12 @@ UNH has an AGOL license, but we need to contact admin to get permissions.
 
     When you're done, click \verb|Save as| from the lefthand menu and pick the same name
     you used for the Feature Layer; add a short description as well.
+
+    \blue{\textbf{NOTE:} }
+    For almost every data point, we are delivering three different views: NEMS, non-NEMS, and all.
+    Thus we need to create one Web Map with the filter set to 
+    \verb|nems=1|, one Web Map with \verb|nems=0|, and one with no filter on that field.
+    Repeat all previous steps for each of these maps.
 
 
     \item 
