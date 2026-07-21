@@ -191,11 +191,11 @@ def cousub_states_years_variables(
         target_states:dict, target_years:list, prefixes:dict, 
         loud=True) -> pd.DataFrame:
     
-    import sys
-    from datetime import datetime
-    old_stdout = sys.__stdout__
-    log_file = open("pipeline_nb.log", "a")
-    sys.stdout = log_file
+    # import sys
+    # from datetime import datetime
+    # old_stdout = sys.__stdout__
+    # log_file = open("pipeline_nb.log", "a")
+    # sys.stdout = log_file
 
     variables = vars_and_moes(prefixes)
     
@@ -205,7 +205,7 @@ def cousub_states_years_variables(
     all_raw_data = []
 
     if loud:
-        print("\n\t\tquerying: " +datetime.now().strftime("%Y-%m-%d %H:%M:%S") +"\n")
+        # print("\n\t\tquerying: " +datetime.now().strftime("%Y-%m-%d %H:%M:%S") +"\n")
         print("variables of interest:\n")
         for k in variables:
             print(k+": "+variables[k])
@@ -236,8 +236,15 @@ def cousub_states_years_variables(
                 print(f"    [!] Error fetching {state_name} in {year}: {e}")
 
 
-    output = acs_df_from_raw(all_raw_data, variables)
-    # output.drop(output[output["county subdivision"] == "00000"].index, inplace=True)
+    # output = acs_df_from_raw(all_raw_data, variables)
+    output = pd.DataFrame(all_raw_data)
+    output.rename(columns=variables, inplace=True)
+    output['GEOID'] = output['state'] + output['county'] + output['county subdivision']
+    output[
+            ["name_str", "muni_str", "county_str", "state_str"]
+        ] = output["NAME"].apply(parse_acs5_cousub_name)
+    output.drop(columns=["NAME"], inplace=True)
+
     """ 
     WARNING: 
         Very hacky name changing here.
@@ -253,19 +260,18 @@ def cousub_states_years_variables(
     output.loc[(output['name_str']=='New Haven') & (output['state_str']=="Connecticut"), 'nems'] = True
     output.loc[(output['name_str']=='Norwalk') & (output['state_str']=="Connecticut"), 'nems'] = True
 
-    keys = list(prefixes.values())
-    for k in keys:
-        output[k+"_cv"] = np.where(
-            output[k]!=0,
-            round( (output[k+"_m"]/1.645)/output[k], 2 ),
-            0
-            )
+    # keys = list(prefixes.values())
+    # for k in keys:
+    #     output[k+"_cv"] = np.where(
+    #         output[k]!=0,
+    #         round( (output[k+"_m"]/1.645)/output[k], 2 ),
+    #         0
+    #         )
 
-    sys.stdout = old_stdout
-    log_file.close()
+    # sys.stdout = old_stdout
+    # log_file.close()
     
     return output
-
 
 
 
@@ -330,7 +336,6 @@ def tract_states_years_variables(
 
 
 
-
 def aggregate(df:pd.DataFrame, agg_name:str, to_agg:list, drop=False) -> pd.DataFrame:
 
     output = df.copy()
@@ -390,3 +395,10 @@ def cv_analysis(incentive_df:pd.DataFrame, category="", threshold=0.3):
                 round( 100.00*len(incentive_df.loc[(incentive_df[var]>threshold) ])/len(incentive_df), 2)
             )
 
+
+
+def main() -> None:
+    print('useful.py: main() called.')
+
+if __name__ == '__main__':
+    main()
