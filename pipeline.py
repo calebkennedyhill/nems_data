@@ -436,4 +436,4 @@ get_all_data(
     target_states = target_states,
     target_years = target_years,
     variables = variables
-).to_csv("./reports/asst_2_metrics_US.csv", sep=",", index=False)
+).to_csv("../reports/asst_2_metrics_US.csv", sep=",", index=False)
