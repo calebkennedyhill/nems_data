@@ -1,7 +1,7 @@
 # Background
 I was fortunate enough to be appointed as a Sustainability Fellow with the UNH Sustainability Institute for Summer 2026.
-I'll be working for the New England Municipal Sustainability (NEMS) network.
-This is where the code I write for my time working for NEMS will live.
+I'll be working, along with Luke Martin, for the New England Municipal Sustainability (NEMS) network.
+This is where the code we write for NEMS will live.
 
 The project goal, broadly, is to compile, digest, and nicely display data quantifying split incentive problems across the NEMS network, and New England more broadly. 
 We're hoping to either mimic or extend the [CELT Legacy Energy Transition Atlas](https://bucas.maps.arcgis.com/apps/instant/portfolio/index.html?appid=ea07ae399445465e9dd2448f211affc0).
@@ -17,10 +17,15 @@ My personal goals this summer include learning about dashboards generally, and h
 I find it remarkable that we have all this data laying around and barely anyone knows about it, much less how to harness it!
 
 Since I'm such a beginner at all this, I'm aiming for readability and transparency.
-That means I might not do *everything* the _most pythonic_ way possible. Give me a break, eh?
+That means I might not do *everything* the _most pythonic_ way possible. 
+Give me a break, eh?
 
 # Requirements 
-python 3.10, pandas 2.3.3, census 0.8.26, and the other usual suspects.
+python 3.10, pandas 2.3.3, census 0.8.26, and the other usual suspects:
+
+```
+pip install python pandas geopandas census 
+```
 
 To run this, you'll need your own Census Bureau API key, whcih can be obtained [here](https://api.census.gov/data/key_signup.html).
 Then you should have a file `setup.py` containing, at least, the following:
