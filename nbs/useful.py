@@ -126,9 +126,8 @@ nems_munis = [
 ]
 
 def check_nems_membership(name: str):
-    if name in nems_munis:
-        return True
-    return False
+    return name in nems_munis
+        
 
 
 def parse_acs5_cousub_name(name_string):
@@ -236,14 +235,14 @@ def cousub_states_years_variables(
                 print(f"    [!] Error fetching {state_name} in {year}: {e}")
 
 
-    # output = acs_df_from_raw(all_raw_data, variables)
-    output = pd.DataFrame(all_raw_data)
-    output.rename(columns=variables, inplace=True)
-    output['GEOID'] = output['state'] + output['county'] + output['county subdivision']
-    output[
-            ["name_str", "muni_str", "county_str", "state_str"]
-        ] = output["NAME"].apply(parse_acs5_cousub_name)
-    output.drop(columns=["NAME"], inplace=True)
+    output = acs_df_from_raw(all_raw_data, variables)
+    # output = pd.DataFrame(all_raw_data)
+    # output.rename(columns=variables, inplace=True)
+    # output['GEOID'] = output['state'] + output['county'] + output['county subdivision']
+    # output[
+    #         ["name_str", "muni_str", "county_str", "state_str"]
+    #     ] = output["NAME"].apply(parse_acs5_cousub_name)
+    # output.drop(columns=["NAME"], inplace=True)
 
     """ 
     WARNING: 
