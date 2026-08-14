@@ -1,3 +1,7 @@
+# End Result
+(8/14/2026) I'm wrapping up work on thsi project for now.
+Here's a link to see the tool that these GeoDataFrames helped create: [The NEMS Split Incentives Atlas.](https://myunh.maps.arcgis.com/apps/instant/portfolio/index.html?appid=ae6be72e96914081b652c6c7019030a4)
+
 # Background
 I was fortunate enough to be appointed as a Sustainability Fellow with the UNH Sustainability Institute for Summer 2026.
 I'll be working, along with Luke Martin, for the New England Municipal Sustainability (NEMS) network.

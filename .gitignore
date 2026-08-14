@@ -12,3 +12,6 @@ methods/docs.synctex.gz
 methods/docs.out
 pipeline_nb.log
 shapes_out/*
+nbs/__pycache__/setup.cpython-310.pyc
+.gitignore
+nbs/__pycache__/useful.cpython-310.pyc
