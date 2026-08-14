@@ -233,7 +233,7 @@ def cousub_states_years_variables(
                 
             except Exception as e:
                 print(f"    [!] Error fetching {state_name} in {year}: {e}")
-
+ 
 
     output = acs_df_from_raw(all_raw_data, variables)
     # output = pd.DataFrame(all_raw_data)
